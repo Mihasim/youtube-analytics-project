@@ -26,6 +26,10 @@ class Channel:
 
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+
     @property
     def channel_id(self):
         return self.__channel_id
@@ -60,3 +64,29 @@ class Channel:
                        }
         with open(self.file, "w", encoding="utf-8") as f:
             json.dump(attrib_dict, f, indent=2, ensure_ascii=False)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__},\n{self.__channel_id},\n{self.title},\n" \
+               f"{self.description}, \n{self.url}, \n{self.subscriber_count}, \n" \
+               f"{self.video_count}, \n{self.view_count}"
+
+    def __add__(self, other):
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other):
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other):
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other):
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __lt__(self, other):
+        return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __le__(self, other):
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __eq__(self, other):
+        return int(self.subscriber_count) == int(other.subscriber_count)
